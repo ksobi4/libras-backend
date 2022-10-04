@@ -1,13 +1,10 @@
-const { initializeApp, applicationDefault, cert 
-} = require('firebase-admin/app');
+import admin from 'firebase-admin';
+var serviceAcc = require('../config/db.json')
 
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAcc)
+});
 
-export function initDB() {
-  const serviceAccount = require('../config/libras-app-7e067-firebase-adminsdk-76c8c-c5f038ff21.json');
-
-  initializeApp({
-    credential: cert(serviceAccount)
-  });
-
-}
+const db = admin.firestore();
+export {db} ;
 

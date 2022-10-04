@@ -3,9 +3,18 @@ import logger from "../utils/logger";
 export function gradesConventer(grades: any): any {
   let list: any[] = [];
   grades.forEach((subject: any) => {
+    let newSubject = subject['semester'].map((term:any) => {
+      let grades =term['grades'].map((grade: any) => {
+        return {id: grade['id'].toString(), value: grade['value'] };
+      })
+
+      return {
+        grades: grades,
+      }
+    })
     list.push({
       "name": subject['name'],
-      "terms": subject['semester']
+      "terms": newSubject
     })
   });
   return {"subjects":list};
