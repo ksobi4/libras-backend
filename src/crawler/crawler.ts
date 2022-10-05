@@ -62,19 +62,19 @@ class Crawler {
     })
   }
 
-  // public messages(): Promise<any> {
-  //   return new Promise((resolve, reject) => {
-  //     setTimeout(() => {
-  //       reject('Timeout 20s')
-  //     }, 20*1000);
+  public notifications(): Promise<any> {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        reject('Timeout 20s')
+      }, 20*1000);
 
-  //     this.client.info.getGrade(parseInt(gradeId))
-  //     .catch((err:string) => reject('oneGrade err:' + err))
-  //     .then((data: any) => {
-  //       resolve(oneGradeConvernter(data));
-  //     })
-  //   })
-  // }
+      this.client.info.getNotifications()
+      .catch((err:string) => reject('oneGrade err:' + err))
+      .then((data: any) => {
+        resolve(data);
+      })
+    })
+  }
 
 }
 
