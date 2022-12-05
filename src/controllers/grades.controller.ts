@@ -8,7 +8,8 @@ import { Grades } from "../models/Grades";
 import {  getGradesCrawler, getGradesDB, updateOrAddGradesToDB } from "../services/grades.service";
 import { getTime, isTimePassed, timeDiff } from "../utils/time";
 import usageConfig from '../config/usage.config'
-import { JwtData } from "../types/jwtData";
+import { JwtData } from "../types/jwt_data";
+// import { JwtData } from "../types/jwtData";
 
 
 export async function gradesController1(req:Request, res:Response) {
