@@ -1,5 +1,5 @@
-import { jwtData } from "../types/jwtData";
-import { getPassword } from "../utils/jwt.utils";
+import { LoginAndPassword } from "../types/login_and_password";
+import { getLoginAndPassword } from "../utils/jwt.utils";
 import Crawler from "./crawler";
 
 var clientHandler : {
@@ -13,17 +13,17 @@ var clientHandler : {
     this.list.push(client);  
   },
 
-  getClient: async function (user:jwtData, token:string): Promise<Crawler> {
+  getClient: async function (userId:string, token:string, ): Promise<Crawler> {
     try {
       this.list.forEach((client: Crawler) => {
-        if(client.userUuid = user.uuid) return client;
+        if(client.userUuid = userId) return client;
       })
   
       const tempClient = new Crawler();
   
-      const password: string = getPassword(token)
+      const loginAndPass: LoginAndPassword = getLoginAndPassword(token)
 
-      await tempClient.auth(user.login, password);
+      await tempClient.auth(loginAndPass.login, loginAndPass.password);
       this.addClient(tempClient);
 
       return tempClient;

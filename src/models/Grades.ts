@@ -1,5 +1,8 @@
 import 'reflect-metadata';
+import admin from 'firebase-admin';
+import { getTimeStamp } from '../utils/time';
 import { jsonObject, jsonMember, TypedJSON, jsonArrayMember } from 'typedjson';
+import logger from '../utils/logger';
 
 
 @jsonObject
@@ -106,22 +109,28 @@ export class Grades {
   @jsonArrayMember(Subject)
   subjects: Subject[];
   @jsonMember(String)
-  timestamp:string;
-  @jsonMember(String)
   userId:string;
 
-  constructor(subjects: Subject[], timestamp:string, userId:string) {
+  timestamp:admin.firestore.Timestamp;
+
+  constructor(subjects: Subject[], userId:string) {
     this.subjects = subjects;
-    this.timestamp = timestamp;
+    this.timestamp = getTimeStamp(),
     this.userId = userId;
   }
 
-  public static fromJson(obj: Object): Grades {
-    return gradesSerializer.parse(obj) as Grades;
+  public static fromJson(obj: any): Grades {
+   let save = obj.timestamp;
+    let grades = gradesSerializer.parse(obj) as Grades;
+    grades.timestamp = save;
+    return grades;
   }
 
   public toJson(): any {
-    return gradesSerializer.stringify(this);
+    let json = JSON.parse(gradesSerializer.stringify(this));
+    json['timestamp'] = this.timestamp;
+    return json;
+
   }
 }
 

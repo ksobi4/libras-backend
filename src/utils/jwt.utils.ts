@@ -1,7 +1,6 @@
 import jwt from 'jsonwebtoken';
 import config from '../config/config'
-import { jwtData } from '../types/jwtData';
-import logger from './logger';
+import { LoginAndPassword } from '../types/login_and_password';
 
 
 const JWT_key = config.JWT_private_key;
@@ -25,11 +24,14 @@ export function verifyJwt(token: string) {
   }
 }
 
-export function getPassword(token:string) {
+export function getLoginAndPassword(token:string): LoginAndPassword {
   try {
     const decoded = jwt.verify(token, JWT_key);
     var temp =JSON.parse(JSON.stringify(decoded))
-    return temp['password'];
+    return {
+      password: temp['password'],
+      login: temp['login'],
+    };
 
   } catch (e) {
     throw e;

@@ -2,46 +2,44 @@ import Crawler from "../crawler/crawler";
 import { db } from "../utils/init_database";
 import { getUuid } from "../utils/uuid";
 import clientHandler from '../crawler/handler';
-import { jwtData } from "../types/jwtData";
-import moment from "moment";
-import usageConfig from "../config/usage.config";
-import { getTime } from "../utils/time";
-import {omit}  from 'lodash';
+import { Grades } from "../models/Grades";
+import { getTimeStamp } from "../utils/time";
 
-
-export async  function getAndCreateGradesService(user: jwtData, token:string) {
+export async function getGradesCrawler(userId:string, token:string): Promise<Grades> {
   try {
-    const client:Crawler = await clientHandler.getClient(user, token)
-  let json = await client.grades();
-  json['timestamp'] = getTime();
-  json["userId"] = user.uuid;
-  await db.collection('grades').doc(getUuid()).set(json);
+    const client:Crawler = await clientHandler.getClient(userId, token)
+    let json = await client.grades();
 
-  return omit(json, ['userId']);
+    json['userId'] = userId;
+    json['timestamp'] = getTimeStamp();
+    
+    let grades = Grades.fromJson(json) as Grades;
+    return grades;
   } catch (e) {
     throw e;
   }
-  
 }
 
-export async  function getAndUpdateGradesService(user: jwtData, token:string) {
-  try {
-    const client:Crawler = await clientHandler.getClient(user, token)
-  let json = await client.grades();
+export async function getGradesDB(userId: string): Promise<Grades | null> {
+  let data = await db.collection('grades').where('userId', '==', userId).get();
 
-  json['timestamp'] = getTime();
-  json["userId"] = user.uuid;
-
-  let arr = await db.collection('grades')
-    .where('userId', '==', user.uuid).get();
-  if(!arr.empty) {
-    arr.docs[0].ref.set(json)
+  if(data.empty) {
+    return null;
+  } else {
+    let gradesJson = data.docs[0].data()
+    return Grades.fromJson(gradesJson) as Grades;
   }
+}
 
-  return omit(json, ['userId']);
+export async function updateOrAddGradesToDB(grades:Grades, userId:string) {
+  try {
+    let userList = await db.collection('grades').where('userId', '==', userId).get();
+    if(userList.empty) {
+      db.collection('grades').doc(getUuid()).set(grades.toJson())
+    } else {
+      userList.docs[0].ref.set(grades.toJson());
+    }
   } catch (e) {
     throw e;
   }
-  
 }
-
