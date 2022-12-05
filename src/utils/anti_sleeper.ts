@@ -7,5 +7,5 @@ export function antiSleeper() {
     let PORT = process.env.PORT || 3001;
     axios.get(`http://10.0.2.2:${PORT}/`);
     logger.info('## anti sleeper ##');
-  }, 0.2*1000*60);
+  }, 10*1000*60);
 }
