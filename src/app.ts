@@ -3,6 +3,7 @@ import express from 'express';
 import logger from './utils/logger';
 import routes from './routes';
 import { initDB } from './utils/init_database';
+import { antiSleeper } from './utils/anti_sleeper';
 
 
 const PORT = process.env.PORT || 3001;
@@ -20,6 +21,7 @@ async function main() {
   await initDB();
   
 
+  antiSleeper();
   // timeChecker();
 
 }

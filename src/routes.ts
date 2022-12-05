@@ -19,7 +19,14 @@ import { notificationSendController } from './controllers/notification.controlle
 import { notificationSendSchema } from './schema/notification_send.schema';
 
 function routes(app: Express) {
-  app.get('/api', (req: Request, res:Response) => res.status(200).send('Hello in Libras api'))
+  app.get('/api', (req: Request, res:Response) => {
+    //res.status(200).send('Hello in Libras api');
+    res.redirect('http://xd.io', 301)
+  });
+
+  app.get('/', (req: Request, res:Response) => {
+    res.status(200).send('Hello in Libras api');
+  });
 
   app.post('/api/login', validator(loginSchema), loginController);
 
