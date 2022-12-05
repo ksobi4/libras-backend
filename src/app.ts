@@ -15,9 +15,10 @@ app.use(express.json());
 
 async function main() {
   await app.listen(PORT)
-  logger.info(`App runs at http://localhost:${PORT}`);
+  logger.info(`App runs at http://localhost:${PORT} 11`);
   await routes(app);  
   await initDB();
+  
 
   // timeChecker();
 
