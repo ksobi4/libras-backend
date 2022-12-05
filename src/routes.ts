@@ -15,6 +15,8 @@ import { oneGradeSchema } from './schema/one_grade';
 
 import { testController } from './controllers/test.controller';
 import logger from './utils/logger';
+import { notificationSendController } from './controllers/notification.controller';
+import { notificationSendSchema } from './schema/notification_send.schema';
 
 function routes(app: Express) {
   app.get('/api', (req: Request, res:Response) => res.status(200).send('Hello in Libras api'))
@@ -26,6 +28,10 @@ function routes(app: Express) {
   app.post('/api/one_grade', validator(oneGradeSchema), tokenValidator, oneGradeController)
 
   app.post('/api/update_last_login', tokenValidator, updateLastLogin)
+
+
+  //notification
+  app.post('/api/notification/send', validator(notificationSendSchema),tokenValidator, notificationSendController)
 
   //testing
   app.post('/api/test', tokenValidator, testController)

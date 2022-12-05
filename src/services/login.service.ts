@@ -62,8 +62,11 @@ export async function getToken(login: string, password:string): Promise<string>{
 export async function addNotificationToken(notificationToken: string, token:string): Promise<void> {
   let userList = await db.collection('users').where('token','==', token).get();
 
+  
   let notificationTokenList: Array<string> = userList.docs[0].get('notification_tokens');
   let userId:string =userList.docs[0].id;
+
+  if(notificationTokenList == undefined) notificationTokenList = [];
 
 
   let isTokenAlready:boolean = false;

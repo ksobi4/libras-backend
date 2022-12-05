@@ -1,4 +1,5 @@
 
+import { Response,Request  } from "express";
 import moment from "moment";
 import usageConfig from "../config/usage.config";
 import Crawler from "../crawler/crawler";
@@ -7,7 +8,8 @@ import logger from "../utils/logger";
 import { db } from "../utils/init_database";
 import { getUserUuid } from "../utils/uuid";
 import clientHandler from "../crawler/handler";
-import { gradesNotifService } from "../services/notification.service";
+import { gradesNotifService, sendNotification } from "../services/notification.service";
+import { getTime } from "../utils/time";
 
 
 let minutes = usageConfig.timeChecker * 60 * 1000;
@@ -46,4 +48,23 @@ export async function checkNotification() {
 
 
 
+export async function notificationSendController(req:Request, res:Response) {
+
+  logger.info(`${getTime()} /api/notification/send body=${JSON.stringify(req.body)}`);
+
+  const {title, description, token} = req.body;
+
+  
+
+
+
+  try {
+    let out = await sendNotification([token], title, description);
+    logger.info(`out = ${out}`);
+    res.sendStatus(200);
+  } catch (e) {
+    logger.error(e);
+    res.send(`err :${e}`)
+  }
+}
 
