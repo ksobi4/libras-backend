@@ -1,9 +1,11 @@
 import express from 'express';
 
+
 import logger from './utils/logger';
 import routes from './routes';
 import { initDB } from './utils/init_database';
 import { antiSleeper } from './utils/anti_sleeper';
+import { notificationIntervalChecker } from './controllers/notification.controller';
 
 
 const PORT = process.env.PORT || 3001;
@@ -22,7 +24,8 @@ async function main() {
   
 
   antiSleeper();
-  // timeChecker();
+  // notificationIntervalChecker();
+  logger.info(`env = ${process.env.NODE_ENV}`)
 
 }
 

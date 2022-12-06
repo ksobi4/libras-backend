@@ -18,11 +18,14 @@ export async function gradesNotifService (crawler: Crawler, userId: string, toke
     ) {
       let newGrades = await getGradesCrawler(userId, token);
       
+      // logger.info(`oldgrades = ${JSON.stringify(gradesDB.toJson(), null, 2)}`);
+      // logger.info(`newGrades = ${JSON.stringify(newGrades.toJson(), null, 2)}`);
+
       let notificationGradeList:Array<NotificationGrade> = await gradesDiffs(gradesDB, newGrades)
       let deviceList = await getAllUserDeviceTokens(userId);
 
-      logger.info(`new grade list = ${JSON.stringify(notificationGradeList)}`);
-      logger.info(`deviceList list = ${JSON.stringify(deviceList)}`);
+      // logger.info(`new grade list = ${JSON.stringify(notificationGradeList)}`);
+      // logger.info(`deviceList list = ${JSON.stringify(deviceList)}`);
       notificationGradeList.forEach(grade => {
         sendNotification(deviceList, "Nowa ocena!", `Ocena ${grade.value} z przedmiotu ${grade.subject}`);
       });

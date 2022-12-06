@@ -14,7 +14,7 @@ import { getTime } from "../utils/time";
 
 let minutes = usageConfig.timeChecker * 60 * 1000;
 
-export function notificationChecker() {
+export function notificationIntervalChecker() {
   setInterval(function() {
     logger.info('TIME CHECKER')
     checkNotification();
@@ -31,12 +31,12 @@ export async function checkNotification() {
 
     await list.docs.forEach( async (el) => {
       let user: User = User.fromJson(el.data());
-      let userUuid = await getUserUuid(user.login);
+      let userId= await getUserUuid(user.login);
 
       const client:Crawler = await clientHandler.getClient(user, user.token);
 
       //parts on notification
-      await gradesNotifService(client, userUuid, user.token);
+      await gradesNotifService(client, userId, user.token);
       
 
     })
@@ -53,10 +53,6 @@ export async function notificationSendController(req:Request, res:Response) {
   logger.info(`${getTime()} /api/notification/send body=${JSON.stringify(req.body)}`);
 
   const {title, description, token} = req.body;
-
-  
-
-
 
   try {
     let out = await sendNotification([token], title, description);
