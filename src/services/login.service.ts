@@ -3,7 +3,7 @@ import jwt  from 'jsonwebtoken';
 import { v4 as uuidv4 } from 'uuid';
 
 import clientHandler from '../crawler/handler';
-import config from '../config/config'
+import {jwt_private_key} from '../config/config'
 import Crawler from '../crawler/crawler';
 import { db } from '../utils/init_database';
 import { getTime, getTimeStamp } from '../utils/time';
@@ -16,7 +16,6 @@ import { createTypePredicateNodeWithModifier } from 'typescript';
 // import { JwtData } from '../types/jwtData';
 // import { JwtData } from '../types/jwtData';
 
-const jwtKey = config.JWT_private_key;
 
 export async function getToken(login: string, password:string): Promise<string>{
   
@@ -39,7 +38,7 @@ export async function getToken(login: string, password:string): Promise<string>{
 
     const token:string = await jwt.sign(
       jwtData1, 
-      jwtKey, {  expiresIn:'30d' }
+      jwt_private_key, {  expiresIn:'30d' }
     )
     if(userList.empty) {
 

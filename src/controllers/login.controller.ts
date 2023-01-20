@@ -18,7 +18,7 @@ export async function loginController(req:Request, res:Response) {
     res.json({token: token});
   } catch (e) {
     logger.error(e);
-    res.send(`err :${e}`)
+    res.status(401).send(`err :${e}`)
   }
 }
 

@@ -1,14 +1,13 @@
 import jwt from 'jsonwebtoken';
-import config from '../config/config'
+import {jwt_private_key} from '../config/config'
 import { LoginAndPassword } from '../types/login_and_password';
 
 
-const JWT_key = config.JWT_private_key;
 
 
 export function verifyJwt(token: string) {
   try {
-    const decoded = jwt.verify(token, JWT_key)
+    const decoded = jwt.verify(token, jwt_private_key)
 
     return {
       valid: true,
@@ -26,7 +25,7 @@ export function verifyJwt(token: string) {
 
 export function getLoginAndPassword(token:string): LoginAndPassword {
   try {
-    const decoded = jwt.verify(token, JWT_key);
+    const decoded = jwt.verify(token, jwt_private_key);
     var temp =JSON.parse(JSON.stringify(decoded))
     return {
       password: temp['password'],
