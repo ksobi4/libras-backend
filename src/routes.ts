@@ -41,7 +41,7 @@ function routes(app: Express) {
   app.post('/api/notification/send', validator(notificationSendSchema),tokenValidator, notificationSendController)
 
   //testing
-  app.post('/api/test', tokenValidator, testController)
+  app.post('/api/test', testController)
 
   app.all('*', (req: Request, res:Response) => {
     logger.info(`url= ${req.url}`);

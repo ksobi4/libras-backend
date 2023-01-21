@@ -2,7 +2,10 @@ import * as dotenv from 'dotenv';
 import {resolve} from 'path'
 import assert = require("assert");
 
-let file:string = `${(process.env.NODE_ENV)?.trim()}.env`
+let env1 = process.env.NODE_ENV == undefined ? "dev" : process.env.NODE_ENV;
+
+
+let file:string = `${(env1)?.trim()}.env`
 
 dotenv.config({path: resolve( __dirname, file)});
 

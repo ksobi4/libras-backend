@@ -12,9 +12,6 @@ import { User } from '../models/User';
 import { JwtData } from '../types/jwt_data';
 import { boolean } from 'zod';
 import { createTypePredicateNodeWithModifier } from 'typescript';
-// import { JwtData } from '../types/jwtData';
-// import { JwtData } from '../types/jwtData';
-// import { JwtData } from '../types/jwtData';
 
 
 export async function getToken(login: string, password:string): Promise<string>{

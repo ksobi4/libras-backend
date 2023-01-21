@@ -7,6 +7,7 @@ import { diffString, diff } from 'json-diff';
 // import { checkGettingNotifications, sendNotification } from "../services/test.service";
 import { JwtData } from "../types/jwt_data";
 import { checkNotification } from "./notification.controller";
+import { db } from "../utils/init_database";
 
 
 export async function testController(req:Request, res:Response) {
@@ -15,7 +16,12 @@ export async function testController(req:Request, res:Response) {
   const token:string = res.locals.token;
   
   try {
-    await checkNotification();
+    // await checkNotification();
+
+    let res1 = await db.collection('dupa1').doc('dd1').set({
+      stary: "1jd",
+      dwa: "dwa"
+    });
  
     // logger.info(await sendNotification('','title1', 'desc1'));
     

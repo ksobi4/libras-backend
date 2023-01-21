@@ -15,14 +15,19 @@ app.use(express.json());
 
 
 async function main() {
-  await app.listen()
+
+  await app.listen(port)
   logger.info(`App runs at http://localhost:${port} at ENV= ${env}`);
   await routes(app);
   await initDB();
+
+
   
 
   antiSleeper();
   // notificationIntervalChecker();
+
+  
 }
 
 main();
