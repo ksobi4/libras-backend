@@ -18,6 +18,8 @@ import logger from './utils/logger';
 import { notificationSendController } from './controllers/notification.controller';
 import { notificationSendSchema } from './schema/notification_send.schema';
 
+import {env} from './config/config'
+
 function routes(app: Express) {
   app.get('/api', (req: Request, res:Response) => {
     //res.status(200).send('Hello in Libras api');
@@ -25,7 +27,7 @@ function routes(app: Express) {
   });
 
   app.get('/', (req: Request, res:Response) => {
-    res.status(200).send('Hello in Libras api');
+    res.status(200).send(`Hello in Libras api env= ${env}`);
   });
 
   app.post('/api/login', validator(loginSchema), loginController);
