@@ -30,13 +30,16 @@ const {
 
 
 assert(JWT_PRIVATE_KEY, 'jwt private key is required');
+assert(PRIVATE_KEY, 'jwt private key is required');
 assert(PORT, 'port is required');
+
+let newPrivateKey= PRIVATE_KEY.replace(/\n/g, '\n')
 
 let firebaseConfig ={
       "type": TYPE,
       "project_id": PROJECT_ID,
       "private_key_id": PRIVATE_KEY_ID,
-      "private_key": PRIVATE_KEY,
+      "private_key": newPrivateKey,
       "client_email": CLIENT_EMAIL,
       "client_id": CLIENT_ID,
       "auth_uri": AUTH_URI,
