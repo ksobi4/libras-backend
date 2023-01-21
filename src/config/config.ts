@@ -36,6 +36,8 @@ assert(PORT, 'port is required');
 let newPrivateKey_b64= Buffer.from(PRIVATE_KEY, 'base64');
 let newPrivateKey = newPrivateKey_b64.toString('utf8');
 
+newPrivateKey = newPrivateKey.replace(/\\n/g, '\n')
+
 let firebaseConfig ={
       "type": TYPE,
       "project_id": PROJECT_ID,
