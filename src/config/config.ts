@@ -33,16 +33,21 @@ assert(JWT_PRIVATE_KEY, 'jwt private key is required');
 assert(PRIVATE_KEY, 'jwt private key is required');
 assert(PORT, 'port is required');
 
-let newPrivateKey_b64= Buffer.from(PRIVATE_KEY, 'base64');
-let newPrivateKey = newPrivateKey_b64.toString('utf8');
+// let newPrivateKey_b64= Buffer.from(PRIVATE_KEY, 'base64');
+// let newPrivateKey = newPrivateKey_b64.toString('utf8');v.replace(/\\n/g, '\n');
 
-newPrivateKey = newPrivateKey.replace(/\\n/g, '\n')
+let newPrivateKey = JSON.parse(PRIVATE_KEY)
+// newPrivateKey = newPrivateKey['privateKey'];
+// console.log(newPrivateKey);
+
+
+
 
 let firebaseConfig ={
       "type": TYPE,
       "project_id": PROJECT_ID,
       "private_key_id": PRIVATE_KEY_ID,
-      "private_key": newPrivateKey,
+      "private_key": newPrivateKey['privateKey'],
       "client_email": CLIENT_EMAIL,
       "client_id": CLIENT_ID,
       "auth_uri": AUTH_URI,
